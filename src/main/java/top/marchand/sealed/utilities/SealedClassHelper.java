@@ -16,7 +16,7 @@ public class SealedClassHelper {
    * {@code clazz} must be a sealed class or interface. It must declare a constructor
    * that has parameters of same types than the ones defined in {@code args}.
    *
-   * A matching constructor is first search by {@link java.lang/Class#getDeclaredConstructor Class.getDeclaredConstructor}. Then,
+   * A matching constructor is first search by {@link java.lang.Class#getDeclaredConstructor Class.getDeclaredConstructor}. Then,
    * if no matching constructor has been found, it tries to convert wrapper parameters to primitives
    * (e.g. Boolean -> boolean, Integer -> int, etc...). If no matching constructor is found, it throws
    * a {@link NoMatchingConstructor} exception.
