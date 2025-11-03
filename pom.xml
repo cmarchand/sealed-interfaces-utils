@@ -9,6 +9,11 @@
   <name>Sealed classes utilities</name>
   <url>https://github.com/cmarchand/sealed-interfaces-utils</url>
 
+  <scm>
+    <developerConnection>git@github.com:cmarchand/sealed-interfaces-utils.git</developerConnection>
+    <url>https://github.com/cmarchand/sealed-interfaces-utils</url>
+  </scm>
+
   <licenses>
     <license>
       <name>Apache 2.0</name>
