@@ -10,7 +10,7 @@
   <url>https://github.com/cmarchand/sealed-interfaces-utils</url>
 
   <scm>
-    <developerConnection>git@github.com:cmarchand/sealed-interfaces-utils.git</developerConnection>
+    <developerConnection>git:git@github.com:cmarchand/sealed-interfaces-utils.git</developerConnection>
     <url>https://github.com/cmarchand/sealed-interfaces-utils</url>
   </scm>
 
