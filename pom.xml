@@ -4,7 +4,7 @@
 
   <groupId>top.marchand.sealed</groupId>
   <artifactId>utilities</artifactId>
-  <version>1.00.01-SNAPSHOT</version>
+  <version>1.01.00</version>
 
   <name>Sealed classes utilities</name>
   <url>https://github.com/cmarchand/sealed-interfaces-utils</url>
@@ -12,7 +12,7 @@
   <scm>
     <developerConnection>scm:git:git@github.com:cmarchand/sealed-interfaces-utils.git</developerConnection>
     <url>https://github.com/cmarchand/sealed-interfaces-utils</url>
-    <tag>HEAD</tag>
+    <tag>V1.01.00</tag>
   </scm>
 
   <description>Utilities for Sealed classes</description>
