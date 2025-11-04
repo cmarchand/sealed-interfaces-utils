@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.StringJoiner;
+import java.util.function.Predicate;
 
 /**
  * This class has some methods to help to get instances of a Sealed class or interface.
@@ -27,7 +28,7 @@ public class SealedClassHelper {
    * @return An instance whose class-name starts with {@code prefix}, constructing by calling constructor with correct parameters
    * @param <C> The sealed class or interface
    * @throws NotSealedException if {@code clazz} is not sealed
-   * @throws NoMatchingImplementation if no implementationwith name that starts with {@code prefix} is found
+   * @throws NoMatchingImplementation if no implementation with name that starts with {@code prefix} is found
    * @throws NoMatchingConstructor if implementation does not declare a constructor that matches {@code args}
    */
   public static <C> C getInstanceofClassByPrefix(Class<C> clazz, String prefix, Object... args) {
@@ -39,6 +40,40 @@ public class SealedClassHelper {
                   .startsWith(prefix))
               .findFirst()
               .orElseThrow(() -> new NoMatchingImplementation(clazz.getCanonicalName()+" has no implementation that starts with "+prefix));
+    return instantiateClass(aClass, args);
+  }
+
+  /**
+   * Return an instance of the first implementation that matches {@code predicate}.
+   *
+   * {@code clazz} must be a sealed class or interface. It must declare a constructor
+   * that has parameters of same types than the ones defined in {@code args}.
+   *
+   * A matching constructor is first search by {@link java.lang.Class#getDeclaredConstructor Class.getDeclaredConstructor}. Then,
+   * if no matching constructor has been found, it tries to convert wrapper parameters to primitives
+   * (e.g. Boolean -> boolean, Integer -> int, etc...). If no matching constructor is found, it throws
+   * a {@link NoMatchingConstructor} exception.
+   *
+   * @param clazz The sealed class or interface to search implementations in
+   * @param predicate The predicate implementation class name must match
+   * @param args Arguments to pass to constructor
+   * @return An instance whose class-name starts with {@code prefix}, constructing by calling constructor with correct parameters
+   * @param <C> The sealed class or interface
+   * @throws NotSealedException if {@code clazz} is not sealed
+   * @throws NoMatchingImplementation if no implementation with name that starts with {@code prefix} is found
+   * @throws NoMatchingConstructor if implementation does not declare a constructor that matches {@code args}
+   */
+  public static <C> C getInstanceofClassByPredicate(Class<C> clazz, Predicate<Class<?>> predicate, Object... args) {
+    if(!clazz.isSealed()) throw new NotSealedException(clazz.getCanonicalName()+" is not sealed");
+    Class<? extends C> aClass = (Class<? extends C>)
+        Arrays.stream(clazz.getPermittedSubclasses())
+              .filter(predicate)
+              .findFirst()
+              .orElseThrow(() -> new NoMatchingImplementation(clazz.getCanonicalName()+" has no implementation that matches predicate"));
+    return instantiateClass(aClass, args);
+  }
+
+  private static <C> C instantiateClass(Class<? extends C> aClass, Object[] args) {
     try {
       Constructor<? extends C> matchingConstructor = findMatchingConstructor(args, aClass);
       return matchingConstructor.newInstance(args);

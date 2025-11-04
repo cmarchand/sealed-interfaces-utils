@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Test;
 import top.marchand.sealed.utilities.cases.NonSealedInterface;
 import top.marchand.sealed.utilities.cases.SealedInterface;
 
-import java.util.NoSuchElementException;
-
-public class HelperTests {
+public class HelperByPrefixTests {
   @Test
   @DisplayName("Given a non-sealed interface, it should throw exception")
   public void test_01() {
